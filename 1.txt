@@ -1,0 +1,128 @@
+persistenceconfig.xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings >    
+       <setting name="cacheEnabled" value="true"/>
+       <setting name="lazyLoadingEnabled" value="false"/>
+       <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
+	<environments default="env">
+	    <environment id="env">
+	   		<transactionManager type="MANAGED">
+	       		<property name="DefaultAutoCommit" value="false"/>
+	       		<property name="SetAutoCommitAllowed" value="false"/>
+	   		</transactionManager>
+       		<dataSource type="JNDI">
+           		<property name="data_source" value="${datasource.jndi}" />
+       		</dataSource>
+	    </environment>
+	</environments>
+
+	<!-- Mapping files -->
+	<mappers>
+		<!-- Example: -->
+    	<!-- mapper -->
+    	<mapper resource="com/latam/arq/commons/persistence/config/mapping/CancelSpt.xml"/>
+    </mappers>
+</configuration>
+
+
+
+
+insertbookingdocumentconfig
+
+
+
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+    <settings
+       cacheModelsEnabled="true"
+       enhancementEnabled="true"
+       lazyLoadingEnabled="false"
+       maxRequests="32"
+       maxSessions="10"
+       maxTransactions="5"
+       useStatementNamespaces="false"
+    />
+
+    <transactionManager type="EXTERNAL">
+        <property name="DefaultAutoCommit" value="false"/>
+        <property name="SetAutoCommitAllowed" value="false"/>
+        <dataSource type="JNDI">
+            <property name="DataSource" value="${ejb.datasource.jndi}" />
+        </dataSource>
+    </transactionManager>
+
+    <!--
+	<transactionManager type="JDBC" >
+		<dataSource type="SIMPLE">
+			<property name="JDBC.Driver" value="${ejb.jdbc.driver}"/>
+			<property name="JDBC.ConnectionURL" value="${ejb.jdbc.url}"/>
+			<property name="JDBC.Username" value="${ejb.jdbc.user}"/>
+			<property name="JDBC.Password" value="${ejb.jdbc.password}"/>
+		</dataSource>
+	</transactionManager>
+    -->
+
+    <sqlMap resource="com/lan/webservice/InsertBookingDocument/persistence/config/InsertBookingDocument.xml" />
+</sqlMapConfig>
+
+
+-------------------
+
+
+<context-param>
+    <param-name>INTEGRATION_URL_OUT</param-name>
+    <param-value>/booking/login/setIntegration.jsp?sPhase=2</param-value>
+</context-param>
+
+    <pathelement location="${lib.home}/CISLan.jar"/>
+
+
+--------------------
+
+
+  <target name="wl-deploy">
+    <java fork="true" failonerror="true" classname="weblogic.Deployer">
+      <classpath>
+         <path refid="project.class.path" />
+      </classpath>
+      <arg line="${weblogic.args} -deploy -name ${app.name} ${app.dist}/${app.name}.ear"/>
+    </java>
+  </target>
+
+
+  <target name="wl-undeploy">
+    <java fork="true" failonerror="true" classname="weblogic.Deployer">
+      <classpath>
+         <path refid="project.class.path" />
+      </classpath>
+      <arg line="${weblogic.args} -undeploy -name ${app.name}"/>
+    </java>
+  </target>
+
+---
+
+app.properties
+
+--
+
+cislanConfig.xml
+
+<CisLan_config>
+  <CorporateId>modseg</CorporateId>
+  <UserId>modseguser</UserId>
+  <ServerAddress>57.228.129.54</ServerAddress>
+  <Password>modseg</Password>
+  <TimeOut>60</TimeOut>
+  <Port>10000</Port>
+</CisLan_config>
+
+-----
+
+
+http://www.amazon.com/Topeak-Modula-Waterbottle-Cage-2/dp/B004Y69QX8/ref=sr_1_17?ie=UTF8&qid=1456407241&sr=8-17&keywords=bicycle+bottle+holder 
